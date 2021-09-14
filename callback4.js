@@ -5,24 +5,35 @@
     Get all the lists for the Thanos board
     Get all cards for the Mind list simultaneously
 */
+const boardInfo = require("./callback1");
+const listInfo = require("./callback2");
+const cardsInfo = require("./callback3");
 
 const infoOfThanosBoard = (boards, lists, cards) => {
   setTimeout(() => {
-    boards.forEach((obj) => {
-      if (obj.name === "Thanos") {
-        console.log(obj);
-        let id = obj.id;
+    boardInfo(boards, (data) => {
+      if (data.name === "Thanos") {
+        console.log(data);
+        let thanosId = data.id;
 
         setTimeout(() => {
-          console.log(lists[id]);
-          let mindOfId = lists[id]
-            .filter((obj) => obj.name === "Mind")
-            .map((obj) => obj.id);
-          mindOfId = mindOfId[0];
+          listInfo(boards, lists, (listData, id) => {
+            if (thanosId == id) {
+              console.log(listData);
+              let idOfMind = listData
+                .filter((obj) => obj.name === "Mind")
+                .map((obj) => obj.id);
+              idOfMind = idOfMind[0];
 
-          setTimeout(() => {
-            console.log(cards[mindOfId]);
-          }, 2000);
+              setTimeout(() => {
+                cardsInfo(boards, lists, cards, (cardData, id) => {
+                  if (idOfMind === id) {
+                    console.log(cardData);
+                  }
+                });
+              }, 2000);
+            }
+          });
         }, 2000);
       }
     });
