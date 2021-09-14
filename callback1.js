@@ -4,7 +4,7 @@
 
 const boardsInfo = (board, lists, cb) => {
   if (board.length == 0 || Object.keys(lists).length == 0) {
-    throw new Error('Error');
+    throw new Error('Boards or lists data is Empty..');
   }
 
   setTimeout(() => {
