@@ -2,14 +2,16 @@
 	Problem 1: Write a function that will return a particular board's information based on the boardID that is passed from the given list of boards in boards.json and then pass control back to the code that called it by using a callback function.
 */
 
-const boardsInfo = (board, lists) => {
+const boardsInfo = (board, lists, cb) => {
+  if (board.length == 0 || Object.keys(lists).length == 0) {
+    throw new Error('Error');
+  }
+
   setTimeout(() => {
     let idOfBoard = board.map((obj) => obj.id);
-    console.log(idOfBoard);
-
     setTimeout(() => {
       idOfBoard.forEach((id) => {
-        console.log(lists[id]);
+        return cb(lists[id], id);
       });
     }, 2000);
   }, 2000);
