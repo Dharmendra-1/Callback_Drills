@@ -4,7 +4,7 @@ const lists = require("../data/lists.json");
 const cards = require("../data/cards.json");
 
 try {
-  const result = infoOfThanosBoard(boards, lists, cards);
+  infoOfThanosBoard(boards, lists, cards);
 } catch (error) {
   console.log(error.message);
 }
