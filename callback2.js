@@ -1,16 +1,28 @@
-const listInfo = (board, lists, cb) => {
-  if (board.length === 0 || Object.keys(lists).length === 0) {
-    throw new Error('Board or lists is Empty..');
-  }
-
-  setTimeout(() => {
-    let boardsId = board.map((obj) => obj.id);
+const boardId = (board) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      boardsId.forEach((id) => {
-        return cb(lists[id], id);
-      });
+      if (board.length == 0) {
+        reject('Boards is Empty..');
+      } else {
+        let idOfBoard = board.map((obj) => obj.id);
+        resolve(idOfBoard);
+      }
     }, 2000);
-  }, 2000);
+  });
 };
 
-module.exports = listInfo;
+const listInfo = (lists, id) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Object.keys(lists).length === 0) {
+        reject('lists is Empty..');
+      } else {
+        if (lists.hasOwnProperty(id)) {
+          resolve(lists[id]);
+        }
+      }
+    }, 2000);
+  });
+};
+
+module.exports = { boardId, listInfo };
