@@ -1,10 +1,3 @@
-/* 
-	Problem 5: 
-    Get information from the Thanos boards
-    Get all the lists for the Thanos board
-    Get all cards for the Mind and Space lists simultaneously
-*/
-
 const boardInfo = require('./callback1');
 const listInfo = require('./callback2');
 const cardsInfo = require('./callback3');
