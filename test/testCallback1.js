@@ -1,11 +1,18 @@
-const boardsInfo = require('../callback1');
+const { boardsInfo, boardId } = require('../callback1');
 const boards = require('../data/boards.json');
 
-try {
-  const result = boardsInfo(boards, (data, id) => {
-    console.log(id);
-    console.log(data);
+boardId(boards)
+  .then((idOfBoard) => {
+    let allPromise = [];
+    idOfBoard.forEach((id) => {
+      allPromise.push(boardsInfo(boards, id));
+    });
+
+    return Promise.all(allPromise);
+  })
+  .then((infoOfBoard) => {
+    infoOfBoard.forEach((info) => console.log(info));
+  })
+  .catch((error) => {
+    console.log(error.message);
   });
-} catch (error) {
-  console.log(error.message);
-}
