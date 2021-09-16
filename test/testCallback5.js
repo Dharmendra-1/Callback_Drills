@@ -4,19 +4,20 @@ const boards = require('../data/boards.json');
 const lists = require('../data/lists.json');
 const cards = require('../data/cards.json');
 
-infoOfMindAndList(boards, lists, cards)
-  .then((idOfList) => {
+const Problem5 = async () => {
+  try {
+    let idOfList = await infoOfMindAndList(boards, lists, cards);
     let SinglePromise = [];
-
     idOfList.forEach((id) => {
       SinglePromise.push(cardsInfo(cards, id));
     });
 
-    return Promise.all(SinglePromise);
-  })
-  .then((card) => {
-    card.forEach((info) => console.log(info));
-  })
-  .catch((error) => {
+    SinglePromise.forEach(async (promise) => {
+      console.log(await promise);
+    });
+  } catch (error) {
     console.log(error.message);
-  });
+  }
+};
+
+Problem5();
