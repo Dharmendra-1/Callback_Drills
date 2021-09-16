@@ -4,19 +4,20 @@ const lists = require('../data/lists.json');
 const cards = require('../data/cards.json');
 const { cardsInfo } = require('../callback3');
 
-infoOfAllCards(boards, lists, cards)
-  .then((idOfList) => {
-    const SinglePromise = [];
-
+const Problem6 = async () => {
+  try {
+    let idOfList = await infoOfAllCards(boards, lists, cards);
+    let SinglePromise = [];
     idOfList.forEach((id) => {
       SinglePromise.push(cardsInfo(cards, id));
     });
 
-    return Promise.all(SinglePromise);
-  })
-  .then((allCard) => {
-    allCard.forEach((card) => console.log(card));
-  })
-  .catch((error) => {
+    SinglePromise.forEach(async (card) => {
+      console.log(await card);
+    });
+  } catch (error) {
     console.log(error.message);
-  });
+  }
+};
+
+Problem6();
