@@ -2,18 +2,20 @@ const { boardId, listInfo } = require('../callback2');
 const boards = require('../data/boards.json');
 const lists = require('../data/lists.json');
 
-boardId(boards)
-  .then((boardOfId) => {
+const ListInfo = async () => {
+  try {
+    let idOfBoard = await boardId(boards);
     let allPromise = [];
-    boardOfId.forEach((id) => {
+    idOfBoard.forEach((id) => {
       allPromise.push(listInfo(lists, id));
     });
 
-    return Promise.all(allPromise);
-  })
-  .then((infoOfList) => {
-    infoOfList.forEach((info) => console.log(info));
-  })
-  .catch((error) => {
+    allPromise.forEach(async (InfoOfList) => {
+      console.log(await InfoOfList);
+    });
+  } catch (error) {
     console.log(error.message);
-  });
+  }
+};
+
+ListInfo();
