@@ -3,20 +3,21 @@ const boards = require('../data/boards.json');
 const lists = require('../data/lists.json');
 const cards = require('../data/cards.json');
 
-boardId(boards)
-  .then((idOfBoard) => {
-    return listOfId(lists, idOfBoard[0]);
-  })
-  .then((idOflist) => {
+const CardsInfo = async () => {
+  try {
+    let idOfBoard = await boardId(boards);
+    let listData = await listOfId(lists, idOfBoard[0]);
     let singlePromise = [];
-    idOflist.forEach((id) => {
+    listData.forEach((id) => {
       singlePromise.push(cardsInfo(cards, id));
     });
-    return Promise.all(singlePromise);
-  })
-  .then((cardsData) => {
-    cardsData.forEach((cardInfo) => console.log(cardInfo));
-  })
-  .catch((error) => {
+
+    singlePromise.forEach(async (cardInfo) => {
+      console.log(await cardInfo);
+    });
+  } catch (error) {
     console.log(error.message);
-  });
+  }
+};
+
+CardsInfo();
