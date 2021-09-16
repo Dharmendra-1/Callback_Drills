@@ -1,44 +1,49 @@
-const boardInfo = require('./callback1');
-const listInfo = require('./callback2');
-const cardsInfo = require('./callback3');
+const { cardsInfo } = require('./callback3');
+const { listInfo } = require('./callback2');
+const { boardId, boardsInfo } = require('./callback1');
 
 const infoOfThanosBoard = (boards, lists, cards) => {
-  if (
-    board.length === 0 ||
-    Object.keys(lists).length === 0 ||
-    Object.keys(cards).length === 0
-  ) {
-    throw new Error('Boards or lists or cards is Empty..');
-  }
-
-  setTimeout(() => {
-    boardInfo(boards, (data) => {
-      if (data.name === 'Thanos') {
-        console.log(data);
-        let thanosId = data.id;
-
-        setTimeout(() => {
-          listInfo(boards, lists, (listData, id) => {
-            if (thanosId == id) {
-              console.log(listData);
-              let idOfMind = listData
-                .filter((obj) => obj.name === 'Mind')
-                .map((obj) => obj.id);
-              idOfMind = idOfMind[0];
-
-              setTimeout(() => {
-                cardsInfo(boards, lists, cards, (cardData, id) => {
-                  if (idOfMind === id) {
-                    console.log(cardData);
-                  }
-                });
-              }, 2000);
-            }
-          });
-        }, 2000);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (
+        boards.length === 0 ||
+        Object.keys(lists).length === 0 ||
+        Object.keys(cards).length === 0
+      ) {
+        reject('Board or lists or card is empty');
       }
-    });
-  }, 2000);
+
+      boardId(boards).then((idOfBoard) => {
+        boardsInfo(boards, idOfBoard[0])
+          .then((info) => {
+            if (info.name === 'Thanos') {
+              console.log(info);
+              listInfo(lists, info.id)
+                .then((infoOfList) => {
+                  console.log(infoOfList);
+                  let idOfMind = infoOfList
+                    .filter((obj) => obj.name === 'Mind')
+                    .map((obj) => obj.id);
+
+                  cardsInfo(cards, idOfMind)
+                    .then((cardsInfo) => {
+                      resolve(cardsInfo);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }, 2000);
+  });
 };
 
 module.exports = infoOfThanosBoard;
