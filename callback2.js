@@ -5,12 +5,10 @@ const listInfo = (board, lists, cb) => {
 
   setTimeout(() => {
     let boardsId = board.map((obj) => obj.id);
-    setTimeout(() => {
-      boardsId.forEach((id) => {
-        return cb(lists[id], id);
-      });
-    }, 2000);
-  }, 2000);
+    boardsId.forEach((id) => {
+      return cb(lists[id], id);
+    });
+  }, 2 * 1000);
 };
 
 module.exports = listInfo;

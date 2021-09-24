@@ -18,10 +18,10 @@ const cardsInfo = (board, lists, cards, cb) => {
               return cb(cards[id], id);
             }
           });
-        }, 2000);
+        }, 2 * 1000);
       });
-    }, 2000);
-  }, 2000);
+    }, 2 * 1000);
+  }, 2 * 1000);
 };
 
 module.exports = cardsInfo;

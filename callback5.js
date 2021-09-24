@@ -4,7 +4,7 @@ const cardsInfo = require('./callback3');
 
 const MindAndSpaceCards = (boards, lists, cards) => {
   if (
-    board.length === 0 ||
+    boards.length === 0 ||
     Object.keys(lists).length === 0 ||
     Object.keys(cards).length === 0
   ) {
@@ -36,13 +36,13 @@ const MindAndSpaceCards = (boards, lists, cards) => {
                     }
                   });
                 });
-              }, 2000);
+              }, 2 * 1000);
             }
           });
-        }, 2000);
+        }, 2 * 1000);
       }
     });
-  }, 2000);
+  }, 2 * 1000);
 };
 
 module.exports = MindAndSpaceCards;

@@ -5,16 +5,14 @@ const boardsInfo = (board, cb) => {
 
   setTimeout(() => {
     let idOfBoard = board.map((obj) => obj.id);
-    setTimeout(() => {
-      idOfBoard.forEach((id) => {
-        board.forEach((boardInfo) => {
-          if (boardInfo.id === id) {
-            return cb(boardInfo, id);
-          }
-        });
+    idOfBoard.forEach((id) => {
+      board.forEach((boardInfo) => {
+        if (boardInfo.id === id) {
+          return cb(boardInfo, id);
+        }
       });
-    }, 2000);
-  }, 2000);
+    });
+  }, 2 * 1000);
 };
 
 module.exports = boardsInfo;
